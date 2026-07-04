@@ -1,12 +1,22 @@
-import { Page, Locator, expect} from "@playwright/test";
+import { type Page, type Locator} from "@playwright/test";
 
 export class LoginPage {
-    constructor(private page: Page) {}
+    private readonly page: Page;
+    public readonly usernameInput: Locator;
+    public readonly passwordInput: Locator;
+    public readonly loginButton: Locator;
+    public readonly loginErrorMessage: Locator;
+    public readonly loginPageLogo: Locator;
 
-    get usernameInput() {return this.page.getByPlaceholder("Username")}
-    get passwordInput() {return this.page.getByPlaceholder("Password")}
-    get loginButton() {return this.page.getByRole("button", {name: "Login"})}
-    get loginPageLogo() {return this.page.locator(".login_logo")}
+    constructor(page: Page) {
+        this.page = page;
+        this.usernameInput = page.getByPlaceholder("Username");
+        this.passwordInput = page.getByPlaceholder("Password");
+        this.loginButton = page.getByRole("button", {name: "Login"});
+        this.loginErrorMessage = page.locator('[data-test="error"]');
+        this.loginPageLogo = page.locator(".login_logo");
+
+    }
 
     async goto(url: string) {
         await this.page.goto(url)
@@ -17,6 +27,5 @@ export class LoginPage {
         await this.passwordInput.fill(password);
         await this.loginButton.click()
     }
-
 
 }
