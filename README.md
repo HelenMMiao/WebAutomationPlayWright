@@ -13,7 +13,7 @@ This framework is built using industry-standard design patterns. Here are the co
 * **Page Object Model (POM):** A deep dive into keeping code clean and maintainable by separating page element locators from the actual test logic.
 * **Data-Driven Testing:** Decouple test scripts from test data, allowing the same test scenarios to run seamlessly with multiple data sets.
 * **Hooks Implementation:** Organizing setup and teardown configurations (like `beforeAll`, `beforeEach`, `afterEach`, and `afterAll`) to efficiently manage browser contexts and test cleanups.
-* **Environment Configuration:** Setting up clean configurations so you can easily toggle between environments by adjusting the `baseURL`.
+* **Environment Configuration & Global Auth:** Setting up clean configurations to easily toggle environments via `baseURL`. Includes implementing `storageState` to reuse authentication states across tests, while explicitly excluding the login tests to ensure the actual auth flow is always verified.
 
 ---
 ## 🧭 Roadmap & Future Explorations

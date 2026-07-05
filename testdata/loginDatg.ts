@@ -3,9 +3,7 @@ interface ValidUser {
   password: string;
 }
 
-interface InvalidUser {
-  username: string;
-  password: string;
+interface InvalidUser extends ValidUser {
   errorMessage: string;
 }
 

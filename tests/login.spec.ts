@@ -4,6 +4,7 @@ import { loginTestData } from '../testdata/loginDatg';
 
 
 test.describe('Login functionality test', () => {
+  test.use({ storageState: { cookies: [], origins: [] } });
   let loginPage: LoginPage;
   // Open the login page before each test
   test.beforeEach(async ({page}) => {
