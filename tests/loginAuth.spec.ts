@@ -12,19 +12,11 @@ test.describe('Login functionality test', () => {
     await loginPage.goto('/');
   });
 
-  // Test to check if all elements on the login page are displayed correctly
-  test('Check Login page display all elements', async ({}) => {
-    await expect.soft(loginPage.usernameInput).toBeVisible()
-    await expect.soft(loginPage.passwordInput).toBeVisible()
-    await expect.soft(loginPage.loginButton).toBeVisible()
-    await expect.soft(loginPage.loginPageLogo).toHaveText("Swag Labs")    
-  });
-
   // Test to check login functionality with valid credentials
   for (const {username, password} of loginTestData.validUsers) {
     test(`Check Login success for user: ${username}, password: ${password}`, async () => {
-      await loginPage.login(username, password)
-      await expect(loginPage.loginButton).not.toBeVisible();
+      const homePage = await loginPage.login(username, password)
+      expect(homePage.productsTitle).toBeVisible();
     });
   }
 

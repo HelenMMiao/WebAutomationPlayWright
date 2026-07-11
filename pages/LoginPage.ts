@@ -1,4 +1,5 @@
 import { type Page, type Locator} from "@playwright/test";
+import { HomePage } from "./HomePage";
 
 export class LoginPage {
     private readonly page: Page;
@@ -26,6 +27,7 @@ export class LoginPage {
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.click()
+        return new HomePage(this.page);
     }
 
 }

@@ -1,0 +1,36 @@
+import { type Page, type Locator} from "@playwright/test";
+import { BasePage } from "./BasePage";
+import { HomepageProductComponent } from "../components/HomepageProductComponent";
+
+export class HomePage extends BasePage {
+    public readonly productsTitle: Locator;
+    public readonly productsFilter: Locator;
+    public readonly productCardsRoot: Locator;
+
+    
+    constructor(page: Page) {
+        super(page);
+        this.productsTitle = page.locator(".title");
+        this.productsFilter = page.locator(".product_sort_container");
+        this.productCardsRoot = page.locator(".inventory_list");
+    }
+
+    async getProductCards(): Promise<HomepageProductComponent[]> {
+        const productCards = await this.productCardsRoot.locator('.inventory_item').all();
+        return productCards.map(productLocator => new HomepageProductComponent(productLocator));
+    }
+    
+    async openMenuOptions() {
+        await this.openMenu.click();
+        const menuItemsNames: string[] = await this.page.locator('.bm-item.menu-item').allInnerTexts();
+        return menuItemsNames;
+    }
+
+    async productsFilterOptions(){
+        const productFilterOptions: string[] = await this.productsFilter.locator('option').allInnerTexts();
+        return productFilterOptions;
+    }
+
+    
+
+}
