@@ -8,6 +8,7 @@ export abstract class BasePage {
   protected readonly cartButton: Locator;
   protected readonly socialLinks: Locator;
   protected readonly footerCopy: Locator;
+  protected readonly pageTitle: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -16,10 +17,11 @@ export abstract class BasePage {
     this.cartButton = page.locator('.shopping_cart_link' );
     this.socialLinks = page.locator('.social').locator('a');
     this.footerCopy = page.locator('.footer_copy');
+    this.pageTitle = page.locator(".title");
 }
 
   // Check if header and footer elements are displayed correctly
-  async checkHeaderFooterDisplay() {
+  async checkHeaderFooterDisplay(): Promise<void> {
     await expect.soft(this.openMenu).toBeVisible();
     await expect.soft(this.logo).toHaveText("Swag Labs");
     await expect.soft(this.cartButton).toBeVisible();
@@ -32,4 +34,9 @@ export abstract class BasePage {
   async goto(url: string) {
     await this.page.goto(url)
   }
+
+  get getPageTitle(): Locator {
+    return this.pageTitle;
+  }
+
 }

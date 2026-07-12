@@ -3,14 +3,12 @@ import { BasePage } from "./BasePage";
 import { HomepageProductComponent } from "../components/HomepageProductComponent";
 
 export class HomePage extends BasePage {
-    public readonly productsTitle: Locator;
     public readonly productsFilter: Locator;
     public readonly productCardsRoot: Locator;
 
     
     constructor(page: Page) {
         super(page);
-        this.productsTitle = page.locator(".title");
         this.productsFilter = page.locator(".product_sort_container");
         this.productCardsRoot = page.locator(".inventory_list");
     }
