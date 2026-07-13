@@ -1,4 +1,4 @@
-import {type Locator, expect} from "@playwright/test";
+import { type Locator, expect } from "@playwright/test";
 
 export class BaseProductComponent {
     readonly root: Locator;
@@ -13,8 +13,9 @@ export class BaseProductComponent {
         this.price = this.root.locator('.inventory_item_price');
     }
 
-    async verifyPriceFormat(): Promise<void>{
-        await expect (this.price).toHaveText(/^\$\d+(\.\d{2})$/);
+    async verifyPriceFormat(): Promise<void> {
+        await expect(this.price).toHaveText(/^\$\d+(\.\d{2})$/);
     }
 
 }
+

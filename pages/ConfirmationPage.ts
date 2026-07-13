@@ -1,8 +1,9 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePageSwitchButtons } from "./BasePageSwitchButtons";
-import { CartItemProductQuantityComponent } from "../components/PurchasingProductComponent";
+import { BasePage } from "./BasePage";
+import { QuantityProductComponent } from "../components/product";
+import { BackNextComponent } from "../components/bottomButtons/BackNextComponent";
 
-export class ConfirmationPage extends BasePageSwitchButtons {
+export class ConfirmationPage extends BasePage {
     public readonly cartListHeaderLabel: Locator;
     public readonly cartListHeaderDesciption: Locator;
     public readonly summaryPaymentLabel: Locator;
@@ -13,11 +14,13 @@ export class ConfirmationPage extends BasePageSwitchButtons {
     public readonly summaryGoodsPrice: Locator;
     public readonly summaryTax: Locator;
     public readonly summaryTotalMoney: Locator;
+    public readonly bottomButtons: BackNextComponent;
 
     constructor(page: Page) {
         super(page);
         this.cartListHeaderLabel = page.getByText('QTY');
         this.cartListHeaderDesciption = page.getByText('Description');
+        this.bottomButtons = new BackNextComponent(page.locator('body'));
         this.summaryPaymentLabel = page.getByTestId('payment-info-label');
         this.summaryContractNumber = page.getByTestId('payment-info-value');
         this.summaryDeliveryLabel = page.getByTestId('shipping-info-label');
@@ -28,9 +31,9 @@ export class ConfirmationPage extends BasePageSwitchButtons {
         this.summaryTotalMoney = page.getByTestId('total-label');
 
     }
-    async getProductList(): Promise<CartItemProductQuantityComponent[]> {
+    async getProductList(): Promise<QuantityProductComponent[]> {
         const addedProducts = await this.page.locator('.cart_list').locator('.cart_item').all();
-        return addedProducts.map((product) => new CartItemProductQuantityComponent(product));
+        return addedProducts.map((product) => new QuantityProductComponent(product));
     }
 
     // async waitForPageLoad() {

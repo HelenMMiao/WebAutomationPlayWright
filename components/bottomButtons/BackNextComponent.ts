@@ -1,15 +1,14 @@
-// pages/BasePage.ts
 import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
 
-export abstract class BasePageSwitchButtons extends BasePage {
-    protected readonly backButton: Locator;
-    protected readonly nextButton: Locator;
+export class BackNextComponent {
+    readonly root: Locator;
+    readonly backButton: Locator;
+    readonly nextButton: Locator;
 
-    constructor(page: Page) {
-        super(page);
-        this.backButton = page.locator('.back');
-        this.nextButton = page.locator(".btn_action");
+    constructor(root: Locator) {
+        this.root = root
+        this.backButton = root.locator('.back');
+        this.nextButton = root.locator(".btn_action");
     }
 
     async checkBackButton(expectedText: string): Promise<void> {

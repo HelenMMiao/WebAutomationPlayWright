@@ -42,13 +42,13 @@ test.describe('Page UI test, logged in session', () => {
         // Check if the products title, menu options, and filter options are displayed correctly
         await expect.soft(homePage.getPageTitle).toHaveText("Products");
         expect.soft(await homePage.openMenuOptions()).toEqual(["All Items", "About", "Logout", "Reset App State"]);
-        expect.soft(await homePage.productsFilterOptions()).toEqual(["Name (A to Z)", "Name (Z to A)", "Price (low to high)", "Price (high to low)"]);
+        expect.soft(await homePage.productsSortOptions()).toEqual(["Name (A to Z)", "Name (Z to A)", "Price (low to high)", "Price (high to low)"]);
 
 
     });
 
     //Test to check purchase UI pages with products added into Cart
-    test.describe('Page UI test, Products are added into Carat', () => {
+    test.describe('Products are added into Cart', () => {
 
         //Check Cart page UI displays with added products
         test.beforeEach(async ({ context }) => {
@@ -76,8 +76,8 @@ test.describe('Page UI test, logged in session', () => {
             await cartPage.checkHeaderFooterDisplay();
             // Check if the title and buttons are displayed correctly
             await expect.soft(cartPage.getPageTitle).toHaveText("Your Cart");
-            await cartPage.checkBackButton("Continue Shopping");
-            await cartPage.checkNextButton("Checkout");
+            await cartPage.bottomButtons.checkBackButton("Continue Shopping");
+            await cartPage.bottomButtons.checkNextButton("Checkout");
         });
 
         test('Check Receiver Info page display all elements', async ({ page }) => {
@@ -94,8 +94,8 @@ test.describe('Page UI test, logged in session', () => {
             expect(receiverPage.zipCode).toBeVisible();
 
             //Check if bottom buttons are displayed correctly
-            await receiverPage.checkBackButton("Cancel");
-            await receiverPage.checkNextButton("Continue");
+            await receiverPage.bottomButtons.checkBackButton("Cancel");
+            await receiverPage.bottomButtons.checkNextButton("Continue");
         })
 
         test('Check Confirmation Page display all elements', async ({ page }) => {
@@ -128,8 +128,8 @@ test.describe('Page UI test, logged in session', () => {
             await expect(confirmationPage.summaryTotalMoney).toBeVisible();
 
             //Check bottom buttons displayed
-            await confirmationPage.checkBackButton("Cancel");
-            await confirmationPage.checkNextButton("Finish");
+            await confirmationPage.bottomButtons.checkBackButton("Cancel");
+            await confirmationPage.bottomButtons.checkNextButton("Finish");
         })
 
         test('Check Complete page display all elements', async ({ page }) => {

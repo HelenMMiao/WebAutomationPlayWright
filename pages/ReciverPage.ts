@@ -1,19 +1,18 @@
 import { type Page, type Locator } from "@playwright/test";
-import { BasePageSwitchButtons } from "./BasePageSwitchButtons";
+import { BasePage } from "./BasePage";
+import { BackNextComponent } from "../components/bottomButtons/BackNextComponent";
 
-export class ReceiverPage extends BasePageSwitchButtons {
+export class ReceiverPage extends BasePage {
     public readonly firstName: Locator;
     public readonly lastName: Locator;
     public readonly zipCode: Locator;
-    public readonly cancelButton: Locator;
-    public readonly continueButton: Locator;
+    public readonly bottomButtons: BackNextComponent;
 
     constructor(page: Page) {
         super(page);
         this.firstName = page.getByPlaceholder("First Name");
         this.lastName = page.getByPlaceholder("Last Name");
         this.zipCode = page.getByPlaceholder("Zip/Postal Code");
-        this.cancelButton = page.getByRole('button', { name: 'Cancel' });
-        this.continueButton = page.getByRole('button', { name: 'Continue' });
+        this.bottomButtons = new BackNextComponent(page.locator('body'));
     }
 }

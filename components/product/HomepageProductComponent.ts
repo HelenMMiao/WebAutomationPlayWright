@@ -1,4 +1,4 @@
-import {type Locator} from "@playwright/test";
+import { type Locator, expect } from "@playwright/test";
 import { BaseProductComponent } from "./BaseProductComponent";
 
 export class HomepageProductComponent extends BaseProductComponent {
