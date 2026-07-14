@@ -29,6 +29,4 @@ export class HomePage extends BasePage {
         return productFilterOptions;
     }
 
-
-
 }
