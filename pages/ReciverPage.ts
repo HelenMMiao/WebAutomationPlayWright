@@ -7,6 +7,7 @@ export class ReceiverPage extends BasePage {
     public readonly lastName: Locator;
     public readonly zipCode: Locator;
     public readonly bottomButtons: BackNextComponent;
+    public readonly errorMessage: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -14,5 +15,6 @@ export class ReceiverPage extends BasePage {
         this.lastName = page.getByPlaceholder("Last Name");
         this.zipCode = page.getByPlaceholder("Zip/Postal Code");
         this.bottomButtons = new BackNextComponent(page.locator('body'));
+        this.errorMessage = page.getByTestId("error");
     }
 }
