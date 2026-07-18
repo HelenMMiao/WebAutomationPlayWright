@@ -4,8 +4,20 @@ import { ReceiverPage } from '../pages/ReciverPage';
 import { ConfirmationPage } from '../pages/ConfirmationPage';
 import { addedProducts as expectedProductsList } from '../testdata/addToCart';
 import { ReciverInfoError } from '../testdata/receiverInfo';
+import { type } from 'node:os';
 
 const productKeyList: number[] = expectedProductsList.map(product => product.id);
+
+const sortedExpectedProductListwithId = [...expectedProductsList].sort((a, b) => a.name.localeCompare(b.name));
+const sortedExpectedProductList = sortedExpectedProductListwithId.map(({ id, ...rest }) => rest);
+
+function parsePrice2Num(priceText: string) {
+    //Price after $ will be extracted and parsed
+    const match = priceText.match(/\$(\d+\.\d{2})$/);
+    const priceNum = match ? parseFloat(match[1]) : 0;
+    return priceNum
+}
+
 
 test.beforeEach(async ({ context }) => {
     await context.addInitScript(
@@ -34,9 +46,7 @@ test.describe("Cart Page", () => {
             }))
         );
         const sortedActualProductList = [...actualProductStrList].sort((a, b) => a.name.localeCompare(b.name));
-        const sortedExpectedProductList = [...expectedProductsList].sort((a, b) => a.name.localeCompare(b.name));
-        const sortedTrimmedExpectedProductList = sortedExpectedProductList.map(({ id, ...rest }) => rest);
-        expect(sortedActualProductList).toEqual(sortedTrimmedExpectedProductList);
+        expect(sortedActualProductList).toEqual(sortedExpectedProductList);
     });
 
     test("Continue Shopping button", async () => {
@@ -100,3 +110,59 @@ test.describe("Receiver Page", () => {
     });
 })
 
+
+test.describe("Confirmation page", async () => {
+    let confirmationPage: ConfirmationPage;
+    test.beforeEach(async ({ page }) => {
+        confirmationPage = new ConfirmationPage(page);
+        await confirmationPage.goto('checkout-step-two.html');
+    });
+    test("Continue Shopping button", async () => {
+        await confirmationPage.bottomButtons.backButton.click();
+        await expect(confirmationPage.pageTitle).toHaveText("Products");
+    });
+
+    test("Checkout button", async () => {
+        await confirmationPage.bottomButtons.nextButton.click();
+        await expect(confirmationPage.pageTitle).toHaveText("Checkout: Complete!");
+    });
+
+    test("Cart items", async () => {
+        const actualProductLocatorList = await confirmationPage.getProductList();
+        expect(actualProductLocatorList.length).toBe(expectedProductsList.length)
+
+        const actualProductStrList = await Promise.all(
+            actualProductLocatorList.map(async (product) => ({
+                name: await product.name.innerText(),
+                description: await product.description.innerText(),
+                price: await product.price.innerText()
+            }))
+        );
+        const sortedActualProductList = [...actualProductStrList].sort((a, b) => a.name.localeCompare(b.name));
+        expect(sortedActualProductList).toEqual(sortedExpectedProductList);
+    })
+
+    test("Summary price and Tax", async () => {
+        const actualProductLocatorList = await confirmationPage.getProductList();
+        expect(actualProductLocatorList.length).toBe(expectedProductsList.length)
+
+        const actualProductPrice = await Promise.all(actualProductLocatorList.map(
+            async (product) => {
+                const priceText = await product.price.innerText();
+                return parsePrice2Num(priceText);
+            }))
+
+        const goodsPriceText = await confirmationPage.summaryGoodsPrice.innerText()
+        const goodPriceNum = parsePrice2Num(goodsPriceText);
+        const taxPriceText = await confirmationPage.summaryTax.innerText()
+        const taxPriceNum = parsePrice2Num(taxPriceText);
+        const totalPriceText = await confirmationPage.summaryTotalMoney.innerText();
+        const totalPriceNum = parsePrice2Num(totalPriceText);
+
+        const expectedGoodsPrice = actualProductPrice.reduce((sum, price) => sum + price, 0);
+        const expectedTotalPrice = goodPriceNum + taxPriceNum;
+        expect(goodPriceNum).toBe(expectedGoodsPrice);
+        expect(totalPriceNum).toBe(expectedTotalPrice);
+
+    })
+})

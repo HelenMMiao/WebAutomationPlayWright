@@ -119,13 +119,13 @@ test.describe('Page UI test, logged in session', () => {
 
             // Check if all summary info displayed
             await expect(confirmationPage.summaryPaymentLabel).toHaveText("Payment Information:");
-            await expect(confirmationPage.summaryContractNumber).toBeVisible();
+            await expect(confirmationPage.summaryContractNumber).toHaveText("SauceCard #31337");
             await expect(confirmationPage.summaryDeliveryLabel).toHaveText("Shipping Information:");
-            await expect(confirmationPage.summaryDeliveryName).toBeVisible();
+            await expect(confirmationPage.summaryDeliveryName).toHaveText("Free Pony Express Delivery!");
             await expect(confirmationPage.summaryPriceLabel).toHaveText("Price Total");
-            await expect(confirmationPage.summaryGoodsPrice).toBeVisible();
-            await expect(confirmationPage.summaryTax).toBeVisible();
-            await expect(confirmationPage.summaryTotalMoney).toBeVisible();
+            await expect(confirmationPage.summaryGoodsPrice).toHaveText(/^Item total:\s*\$(\d+\.\d{2})$/);
+            await expect(confirmationPage.summaryTax).toHaveText(/^Tax:\s*\$(\d+\.\d{2})$/);
+            await expect(confirmationPage.summaryTotalMoney).toHaveText(/^Total:\s*\$(\d+\.\d{2})$/);
 
             //Check bottom buttons displayed
             await confirmationPage.bottomButtons.checkBackButton("Cancel");

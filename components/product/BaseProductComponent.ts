@@ -14,7 +14,7 @@ export class BaseProductComponent {
     }
 
     async verifyPriceFormat(): Promise<void> {
-        await expect(this.price).toHaveText(/^\$\d+(\.\d{2})$/);
+        await expect(this.price).toHaveText(/^\$(\d+\.\d{2})$/);
     }
 
 }
