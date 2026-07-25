@@ -15,4 +15,8 @@ export class CompletePage extends BasePage {
         this.completeMessage = page.locator('.complete-text');
         this.backHomeButton = page.getByRole('button', { name: "Back Home" });
     }
+
+    async goto(): Promise<void> {
+        super.goto('/checkout-complete.html');
+    }
 }

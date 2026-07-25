@@ -51,9 +51,9 @@ test.describe('Page UI test, logged in session', () => {
     test.describe('Products are added into Cart', () => {
 
         //Check Cart page UI displays with added products
-        test.beforeEach(async ({ context }) => {
+        test.beforeEach(async ({ page }) => {
             // Add Internal Ids for Backpack [4] and Bike Light [0]
-            await context.addInitScript(() => {
+            await page.addInitScript(() => {
                 window.localStorage.setItem('cart-contents', JSON.stringify([4, 0]))
             })
         });
@@ -134,7 +134,7 @@ test.describe('Page UI test, logged in session', () => {
 
         test('Check Complete page display all elements', async ({ page }) => {
             const completePage = new CompletePage(page);
-            completePage.goto('checkout-complete.html');
+            completePage.goto();
             // Check if header and footer elements are displayed correctly
             await completePage.checkHeaderFooterDisplay();
             // Check if the title is displayed correctly

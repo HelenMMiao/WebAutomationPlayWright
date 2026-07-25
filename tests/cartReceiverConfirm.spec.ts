@@ -19,8 +19,8 @@ function parsePrice2Num(priceText: string) {
 }
 
 
-test.beforeEach(async ({ context }) => {
-    await context.addInitScript(
+test.beforeEach(async ({ page }) => {
+    await page.addInitScript(
         (ids) => {
             window.localStorage.setItem('cart-contents', JSON.stringify(ids));
         },
