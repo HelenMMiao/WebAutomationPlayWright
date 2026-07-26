@@ -1,8 +1,8 @@
 
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "./BasePage";
+import { BasePage } from "./basePage";
 import { CartpageProductComponent } from "../components/product";
-import { BackNextComponent } from "../components/bottomButtons/BackNextComponent";
+import { BackNextComponent } from "../components/bottomButtons/backNextComponent";
 
 export class CartPage extends BasePage {
     public readonly cartListHeaderLabel: Locator;
@@ -17,7 +17,7 @@ export class CartPage extends BasePage {
         this.bottomButtons = new BackNextComponent(page.locator('body'));
     }
 
-    async getCartListItems(): Promise<CartpageProductComponent[]> {
+    async getProductList(): Promise<CartpageProductComponent[]> {
         const cartItems = await this.page.locator('.cart_item').all();
         return cartItems.map(product => new CartpageProductComponent(product));
 

@@ -1,5 +1,5 @@
 import { type Locator, expect } from "@playwright/test";
-import { BaseProductComponent } from "./BaseProductComponent";
+import { BaseProductComponent } from "./baseProductComponent";
 
 export class HomepageProductComponent extends BaseProductComponent {
     readonly image: Locator;

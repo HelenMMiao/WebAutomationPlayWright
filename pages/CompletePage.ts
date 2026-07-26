@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "./BasePage";
+import { BasePage } from "./basePage";
+import { HomePage } from "./homePage";
 
 export class CompletePage extends BasePage {
     public readonly completeLogo: Locator;
@@ -18,5 +19,10 @@ export class CompletePage extends BasePage {
 
     async goto(): Promise<void> {
         super.goto('/checkout-complete.html');
+    }
+
+    async backHomeNavigate(): Promise<HomePage> {
+        await this.backHomeButton.click();
+        return new HomePage(this.page);
     }
 }

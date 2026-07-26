@@ -1,5 +1,5 @@
-import { type Page, type Locator} from "@playwright/test";
-import { HomePage } from "./HomePage";
+import { type Page, type Locator } from "@playwright/test";
+import { HomePage } from "./homePage";
 
 export class LoginPage {
     private readonly page: Page;
@@ -13,7 +13,7 @@ export class LoginPage {
         this.page = page;
         this.usernameInput = page.getByPlaceholder("Username");
         this.passwordInput = page.getByPlaceholder("Password");
-        this.loginButton = page.getByRole("button", {name: "Login"});
+        this.loginButton = page.getByRole("button", { name: "Login" });
         this.loginErrorMessage = page.locator('[data-test="error"]');
         this.loginPageLogo = page.locator(".login_logo");
 
@@ -23,7 +23,7 @@ export class LoginPage {
         await this.page.goto(url)
     }
 
-    async login(username: string, password: string){
+    async login(username: string, password: string) {
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.click()

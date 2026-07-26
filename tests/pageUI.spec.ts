@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { HomePage } from '../pages/HomePage';
-import { CartPage } from '../pages/CartPage';
-import { ReceiverPage } from '../pages/ReciverPage';
-import { ConfirmationPage } from '../pages/ConfirmationPage';
-import { CompletePage } from '../pages/CompletePage';
+import { LoginPage } from '../pages/loginPage';
+import { HomePage } from '../pages/homePage';
+import { CartPage } from '../pages/cartPage';
+import { ReceiverPage } from '../pages/receiverPage';
+import { ConfirmationPage } from '../pages/confirmationPage';
+import { CompletePage } from '../pages/completePage';
 
 test.describe('Page UI test, fresh session', () => {
     test.use({ storageState: { cookies: [], origins: [] } });
@@ -61,7 +61,7 @@ test.describe('Page UI test, logged in session', () => {
         test('Check Cart page display all elements', async ({ page }) => {
             const cartPage = new CartPage(page);
             await cartPage.goto("/cart.html");
-            const addedProductList = await cartPage.getCartListItems();
+            const addedProductList = await cartPage.getProductList();
 
             // Check if all product list displayed correctly, with price format and add/remove cart button 
             expect(addedProductList.length).toBeGreaterThan(0);

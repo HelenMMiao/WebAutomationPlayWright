@@ -1,6 +1,7 @@
 import { type Page, type Locator } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { BackNextComponent } from "../components/bottomButtons/BackNextComponent";
+import { BasePage } from "./basePage";
+import { BackNextComponent } from "../components/bottomButtons/backNextComponent";
+import { ConfirmationPage } from "./confirmationPage";
 
 export class ReceiverPage extends BasePage {
     public readonly firstName: Locator;
@@ -16,5 +17,11 @@ export class ReceiverPage extends BasePage {
         this.zipCode = page.getByPlaceholder("Zip/Postal Code");
         this.bottomButtons = new BackNextComponent(page.locator('body'));
         this.errorMessage = page.getByTestId("error");
+    }
+
+    async inputReceiverInfo(firstName: string, lastName: string, zipCode: string): Promise<void> {
+        await this.firstName.fill(firstName);
+        await this.lastName.fill(lastName);
+        await this.zipCode.fill(zipCode);
     }
 }

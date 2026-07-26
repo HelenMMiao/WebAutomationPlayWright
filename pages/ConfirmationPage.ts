@@ -1,7 +1,7 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "./BasePage";
+import { BasePage } from "./basePage";
 import { QuantityProductComponent } from "../components/product";
-import { BackNextComponent } from "../components/bottomButtons/BackNextComponent";
+import { BackNextComponent } from "../components/bottomButtons/backNextComponent";
 
 export class ConfirmationPage extends BasePage {
     public readonly cartListHeaderLabel: Locator;
@@ -37,7 +37,6 @@ export class ConfirmationPage extends BasePage {
     }
 
     // async waitForPageLoad() {
-    //     this.page.waitForLoadState('')
-    // }
+
 
 }

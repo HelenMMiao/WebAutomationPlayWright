@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { CompletePage } from '../pages/CompletePage'
+import { CompletePage } from '../pages/completePage'
 
 let completePage: CompletePage;
 

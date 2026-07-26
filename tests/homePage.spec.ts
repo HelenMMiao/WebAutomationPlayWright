@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { HomePage } from '../pages/HomePage';
+import { HomePage } from '../pages/homePage';
 
 let homePage: HomePage;
 //Open home page before sorting products

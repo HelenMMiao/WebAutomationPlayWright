@@ -20,4 +20,15 @@ export class BackNextComponent {
         expect(this.nextButton).toHaveText(expectedText);
     }
 
+    async backButtonNavigate<T>(TargetPage: new (page: Page) => T): Promise<T> {
+        await this.backButton.click();
+        const page = this.root.page();
+        return new TargetPage(page);
+    }
+    async nextButtonNavigate<T>(TargetPage: new (page: Page) => T): Promise<T> {
+        await this.nextButton.click();
+        const page = this.root.page();
+        return new TargetPage(page);
+    }
+
 }

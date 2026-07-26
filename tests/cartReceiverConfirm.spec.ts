@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { CartPage } from '../pages/CartPage';
-import { ReceiverPage } from '../pages/ReciverPage';
-import { ConfirmationPage } from '../pages/ConfirmationPage';
+import { CartPage } from '../pages/cartPage';
+import { ReceiverPage } from '../pages/receiverPage';
+import { ConfirmationPage } from '../pages/confirmationPage';
 import { addedProducts as expectedProductsList } from '../testdata/addToCart';
 import { ReciverInfoError } from '../testdata/receiverInfo';
 import { type } from 'node:os';
@@ -35,7 +35,7 @@ test.describe("Cart Page", () => {
         await cartPage.goto('/cart.html');
     });
     test("Make sure cart item displays correctly", async () => {
-        const actualProductLocatorList = await cartPage.getCartListItems();
+        const actualProductLocatorList = await cartPage.getProductList();
         expect(actualProductLocatorList.length).toBe(expectedProductsList.length)
 
         const actualProductStrList = await Promise.all(
