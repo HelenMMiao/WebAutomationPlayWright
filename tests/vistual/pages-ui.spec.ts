@@ -1,31 +1,19 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
-import { HomePage } from '../pages/homePage';
-import { CartPage } from '../pages/cartPage';
-import { ReceiverPage } from '../pages/receiverPage';
-import { ConfirmationPage } from '../pages/confirmationPage';
-import { CompletePage } from '../pages/completePage';
+import { test, expect } from '../../fixtures/page-fixture';
 
-test.describe('Page UI test, fresh session', () => {
+test.describe('Fresh session', () => {
     test.use({ storageState: { cookies: [], origins: [] } });
     // Test to check if all elements on the login page are displayed correctly
-    test('Check Login page display all elements', async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto('/');
+    test('UI - Check Login page', async ({ loginPage }) => {
         await expect.soft(loginPage.usernameInput).toBeVisible()
         await expect.soft(loginPage.passwordInput).toBeVisible()
         await expect.soft(loginPage.loginButton).toBeVisible()
         await expect.soft(loginPage.loginPageLogo).toHaveText("Swag Labs")
     });
-
-
 })
 
-test.describe('Page UI test, logged in session', () => {
+test.describe('Logged in session', () => {
     // Test to check if all elements on the home page are displayed correctly
-    test('Check Home page display all elements', async ({ page }) => {
-        const homePage = new HomePage(page);
-        await homePage.goto("/inventory.html");
+    test('UI - Check Home page', async ({ homePage }) => {
         const productCards = await homePage.getProductCards();
 
         // Check if all product cards are displayed correctly, with price format and add/remove cart button 
@@ -58,9 +46,7 @@ test.describe('Page UI test, logged in session', () => {
             })
         });
 
-        test('Check Cart page display all elements', async ({ page }) => {
-            const cartPage = new CartPage(page);
-            await cartPage.goto("/cart.html");
+        test('Check Cart page display all elements', async ({ cartPage }) => {
             const addedProductList = await cartPage.getProductList();
 
             // Check if all product list displayed correctly, with price format and add/remove cart button 
@@ -80,9 +66,7 @@ test.describe('Page UI test, logged in session', () => {
             await cartPage.bottomButtons.checkNextButton("Checkout");
         });
 
-        test('Check Receiver Info page display all elements', async ({ page }) => {
-            const receiverPage = new ReceiverPage(page);
-            receiverPage.goto('checkout-step-one.html');
+        test('Check Receiver Info page display all elements', async ({ receiverPage }) => {
             // Check if header and footer elements are displayed correctly
             await receiverPage.checkHeaderFooterDisplay();
             // Check if the title is displayed correctly
@@ -98,11 +82,7 @@ test.describe('Page UI test, logged in session', () => {
             await receiverPage.bottomButtons.checkNextButton("Continue");
         })
 
-        test('Check Confirmation Page display all elements', async ({ page }) => {
-            const confirmationPage = new ConfirmationPage(page);
-            await confirmationPage.goto('/checkout-step-two.html');
-
-
+        test('Check Confirmation Page display all elements', async ({ confirmationPage }) => {
             // Check if header, footer, title are displayed correctly
             await confirmationPage.checkHeaderFooterDisplay();
             await expect.soft(confirmationPage.getPageTitle).toHaveText("Checkout: Overview")
@@ -132,9 +112,7 @@ test.describe('Page UI test, logged in session', () => {
             await confirmationPage.bottomButtons.checkNextButton("Finish");
         })
 
-        test('Check Complete page display all elements', async ({ page }) => {
-            const completePage = new CompletePage(page);
-            completePage.goto();
+        test('Check Complete page display all elements', async ({ completePage }) => {
             // Check if header and footer elements are displayed correctly
             await completePage.checkHeaderFooterDisplay();
             // Check if the title is displayed correctly

@@ -1,10 +1,6 @@
-import { test, expect } from '@playwright/test';
-import { CartPage } from '../pages/cartPage';
-import { ReceiverPage } from '../pages/receiverPage';
-import { ConfirmationPage } from '../pages/confirmationPage';
-import { addedProducts as expectedProductsList } from '../testdata/addToCart';
-import { ReciverInfoError } from '../testdata/receiverInfo';
-import { type } from 'node:os';
+import { test, expect } from '../../fixtures/page-fixture';
+import { addedProducts as expectedProductsList } from '../../testdata/addToCart';
+import { ReciverInfoError } from '../../testdata/receiverInfo';
 
 const productKeyList: number[] = expectedProductsList.map(product => product.id);
 
@@ -29,12 +25,7 @@ test.beforeEach(async ({ page }) => {
 })
 
 test.describe("Cart Page", () => {
-    let cartPage: CartPage;
-    test.beforeEach(async ({ page }) => {
-        cartPage = new CartPage(page);
-        await cartPage.goto('/cart.html');
-    });
-    test("Make sure cart item displays correctly", async () => {
+    test("Make sure cart item displays correctly", async ({ cartPage }) => {
         const actualProductLocatorList = await cartPage.getProductList();
         expect(actualProductLocatorList.length).toBe(expectedProductsList.length)
 
@@ -49,12 +40,12 @@ test.describe("Cart Page", () => {
         expect(sortedActualProductList).toEqual(sortedExpectedProductList);
     });
 
-    test("Continue Shopping button", async () => {
+    test("Continue Shopping button", async ({ cartPage }) => {
         await cartPage.bottomButtons.backButton.click();
         await expect(cartPage.pageTitle).toHaveText("Products");
     });
 
-    test("Checkout button", async () => {
+    test("Checkout button", async ({ cartPage }) => {
         await cartPage.bottomButtons.nextButton.click();
         await expect(cartPage.pageTitle).toHaveText("Checkout: Your Information");
     });
@@ -62,19 +53,13 @@ test.describe("Cart Page", () => {
 
 
 test.describe("Receiver Page", () => {
-    let receiverPage: ReceiverPage;
-    test.beforeEach(async ({ page }) => {
-        receiverPage = new ReceiverPage(page);
-        await receiverPage.goto('/checkout-step-one.html');
-    });
-
-    test("Cancel button", async () => {
+    test("Cancel button", async ({ receiverPage }) => {
         await receiverPage.bottomButtons.backButton.click();
         await expect(receiverPage.pageTitle).toHaveText("Your Cart");
     });
 
 
-    test("Error input", async () => {
+    test("Error input", async ({ receiverPage }) => {
         // Check correct error message when missing some input
         for (const { firstName, lastName, zipCode, errorMessage } of ReciverInfoError) {
             await receiverPage.firstName.fill(firstName);
@@ -91,7 +76,7 @@ test.describe("Receiver Page", () => {
 
     });
 
-    test("Clear error button", async () => {
+    test("Clear error button", async ({ receiverPage }) => {
         await receiverPage.bottomButtons.nextButton.click();
         await receiverPage.errorMessage.getByRole("button").click();
         expect(receiverPage.errorMessage).not.toBeVisible();
@@ -101,7 +86,7 @@ test.describe("Receiver Page", () => {
 
     });
 
-    test("Continue button works", async () => {
+    test("Continue button works", async ({ receiverPage }) => {
         await receiverPage.firstName.fill("Black");
         await receiverPage.lastName.fill("Pink");
         await receiverPage.zipCode.fill("1234");
@@ -112,22 +97,17 @@ test.describe("Receiver Page", () => {
 
 
 test.describe("Confirmation page", async () => {
-    let confirmationPage: ConfirmationPage;
-    test.beforeEach(async ({ page }) => {
-        confirmationPage = new ConfirmationPage(page);
-        await confirmationPage.goto('checkout-step-two.html');
-    });
-    test("Continue Shopping button", async () => {
+    test("Continue Shopping button", async ({ confirmationPage }) => {
         await confirmationPage.bottomButtons.backButton.click();
         await expect(confirmationPage.pageTitle).toHaveText("Products");
     });
 
-    test("Checkout button", async () => {
+    test("Checkout button", async ({ confirmationPage }) => {
         await confirmationPage.bottomButtons.nextButton.click();
         await expect(confirmationPage.pageTitle).toHaveText("Checkout: Complete!");
     });
 
-    test("Cart items", async () => {
+    test("Cart items", async ({ confirmationPage }) => {
         const actualProductLocatorList = await confirmationPage.getProductList();
         expect(actualProductLocatorList.length).toBe(expectedProductsList.length)
 
@@ -142,7 +122,7 @@ test.describe("Confirmation page", async () => {
         expect(sortedActualProductList).toEqual(sortedExpectedProductList);
     })
 
-    test("Summary price and Tax", async () => {
+    test("Summary price and Tax", async ({ confirmationPage }) => {
         const actualProductLocatorList = await confirmationPage.getProductList();
         expect(actualProductLocatorList.length).toBe(expectedProductsList.length)
 

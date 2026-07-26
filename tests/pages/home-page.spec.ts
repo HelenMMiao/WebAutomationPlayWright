@@ -1,16 +1,9 @@
-import { test, expect } from '@playwright/test'
-import { HomePage } from '../pages/homePage';
+import { test, expect } from '../../fixtures/page-fixture';
 
-let homePage: HomePage;
-//Open home page before sorting products
-test.beforeEach(async ({ page }) => {
-    homePage = new HomePage(page);
-    await homePage.goto("/inventory.html");
-});
 
 test.describe('Home page products sort', () => {
     //Sort by name ascending
-    test("Sort products by Name (A to Z)", async () => {
+    test("Sort products by Name (A to Z)", async ({ homePage }) => {
         homePage.productsSort.selectOption("Name (A to Z)");
         const productList = await homePage.getProductCards();
         const productNameList = await Promise.all(
@@ -23,7 +16,7 @@ test.describe('Home page products sort', () => {
     })
 
     //Sort by name ascending
-    test("Sort products by Name (Z to A)", async () => {
+    test("Sort products by Name (Z to A)", async ({ homePage }) => {
         await homePage.productsSort.selectOption("Name (Z to A)");
         const productList = await homePage.getProductCards();
         const productNameList = await Promise.all(
@@ -36,7 +29,7 @@ test.describe('Home page products sort', () => {
     })
 
     //Sort by name ascending
-    test("Sort products by Price (low to high))", async () => {
+    test("Sort products by Price (low to high))", async ({ homePage }) => {
         await homePage.productsSort.selectOption("Price (low to high)");
         const productList = await homePage.getProductCards();
         const productPriceList = await Promise.all(
@@ -51,7 +44,7 @@ test.describe('Home page products sort', () => {
     })
 
     //Sort by name ascending
-    test("Sort products by Price (high to low)", async () => {
+    test("Sort products by Price (high to low)", async ({ homePage }) => {
         await homePage.productsSort.selectOption("Price (high to low)");
 
         const productList = await homePage.getProductCards();
@@ -71,7 +64,7 @@ test.describe('Home page products sort', () => {
 );
 
 //Check product's button works
-test("Add to cart and Remove Button works", async () => {
+test("Add to cart and Remove Button works", async ({ homePage }) => {
     const toBeAddedProducts = [0, 1, 4];
     const productList = await homePage.getProductCards();
     let addedProducts = 0;

@@ -1,8 +1,8 @@
 
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "./basePage";
+import { BasePage } from "./base-page";
 import { CartpageProductComponent } from "../components/product";
-import { BackNextComponent } from "../components/bottomButtons/backNextComponent";
+import { BackNextComponent } from "../components/bottomButtons/back-next-component";
 
 export class CartPage extends BasePage {
     public readonly cartListHeaderLabel: Locator;

@@ -1,16 +1,18 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage, HomePage, CartPage, ReceiverPage, ConfirmationPage, CompletePage } from '../pages';
+import { test, expect } from '../../fixtures/page-fixture';
+import { HomePage } from '../../pages/home-page';
+import { CartPage } from '../../pages/cart-page';
+import { ReceiverPage } from '../../pages/receiver-page';
+import { ConfirmationPage } from '../../pages/confirmation-page';
+import { CompletePage } from '../../pages/complete-page';
 
 test.describe('work flow', async () => {
     test.use({ storageState: { cookies: [], origins: [] } });
-    test("happy path, 1 product", async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto('/')
-        const homePage: HomePage = await loginPage.login("standard_user", "secret_sauce");
+    test("happy path, 1 product", async ({ loginPage }) => {
+        const homePage = await loginPage.login("standard_user", "secret_sauce");
         const products = await homePage.getProductCards();
         await products[0].addRemoveCartButton.click();
         await expect(homePage.cartLogo).toHaveText("1");
-        const cartPage: CartPage = await homePage.cartLogoClick();
+        const cartPage = await homePage.cartLogoClick();
         expect(await cartPage.getProductList()).toHaveLength(1);
         const receiverPage: ReceiverPage = await cartPage.bottomButtons.nextButtonNavigate(ReceiverPage);
         await receiverPage.inputReceiverInfo("Test", "QA", "0000");
@@ -21,9 +23,7 @@ test.describe('work flow', async () => {
         expect(homePage2.pageTitle).toHaveText("Products");
     })
 
-    test("happy path, 0 product", async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto('/')
+    test("happy path, 0 product", async ({ loginPage }) => {
         const homePage: HomePage = await loginPage.login("standard_user", "secret_sauce");
         const products = await homePage.getProductCards();
         const cartPage: CartPage = await homePage.cartLogoClick();
@@ -37,9 +37,7 @@ test.describe('work flow', async () => {
         expect(homePage2.pageTitle).toHaveText("Products");
     })
 
-    test("happy path, 2 product", async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto('/')
+    test("happy path, 2 product", async ({ loginPage }) => {
         const homePage: HomePage = await loginPage.login("standard_user", "secret_sauce");
         const products = await homePage.getProductCards();
         await products[0].addRemoveCartButton.click();
@@ -56,9 +54,7 @@ test.describe('work flow', async () => {
         expect(homePage2.pageTitle).toHaveText("Products");
     })
 
-    test("Backward paths", async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        await loginPage.goto('/')
+    test("Backward paths", async ({ loginPage }) => {
         let homePage: HomePage = await loginPage.login("standard_user", "secret_sauce");
         const products = await homePage.getProductCards();
         await products[0].addRemoveCartButton.click();

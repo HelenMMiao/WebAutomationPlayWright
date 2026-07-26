@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePage } from "./basePage";
-import { HomePage } from "./homePage";
+import { BasePage } from "./base-page";
+import { HomePage } from "./home-page";
 
 export class CompletePage extends BasePage {
     public readonly completeLogo: Locator;
@@ -15,10 +15,6 @@ export class CompletePage extends BasePage {
         this.completeHeader = page.getByRole('heading', { name: 'Thank you for your order!' });
         this.completeMessage = page.locator('.complete-text');
         this.backHomeButton = page.getByRole('button', { name: "Back Home" });
-    }
-
-    async goto(): Promise<void> {
-        super.goto('/checkout-complete.html');
     }
 
     async backHomeNavigate(): Promise<HomePage> {

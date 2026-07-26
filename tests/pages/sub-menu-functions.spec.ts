@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test'
-import { HomePage } from '../pages/homePage';
-import { CartPage } from '../pages/cartPage';
+import { HomePage } from '../../pages/home-page';
+import { CartPage } from '../../pages/cart-page';
 
+// All Items and Reset function when products are added into cart
 test.describe('Added Cart', () => {
 
     test.beforeEach(async ({ context }) => {
@@ -34,6 +35,7 @@ test.describe('Added Cart', () => {
 
 );
 
+// All Items and Reset function when products are empty into cart
 test.describe('Empty Cart', () => {
     test("All Items", async ({ page }) => {
         const cartPage = new CartPage(page);
@@ -59,7 +61,7 @@ test.describe('Empty Cart', () => {
 
 );
 
-//Sort by name ascending
+//About link
 test("About", async ({ page }) => {
     const homePage = new HomePage(page);
     await homePage.goto("/inventory.html");
@@ -67,7 +69,7 @@ test("About", async ({ page }) => {
     await homePage.checkURL('https://saucelabs.com');
 })
 
-//Sort by name ascending
+//Logout link
 test("Logout", async ({ page }) => {
     const homePage = new HomePage(page);
     await homePage.goto("/inventory.html");

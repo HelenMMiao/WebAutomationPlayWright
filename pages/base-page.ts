@@ -55,9 +55,9 @@ export abstract class BasePage {
         await this.page.getByRole('link', { name: subMenu }).click();
     }
 
-    async cartLogoClick(): Promise<import('./cartPage.ts').CartPage> {
+    async cartLogoClick(): Promise<import('./cart-page.js').CartPage> {
         await this.cartLogo.click();
-        const { CartPage } = await import('./cartPage.js');
+        const { CartPage } = await import('./cart-page.js');
         return new CartPage(this.page);
     }
 

@@ -1,7 +1,7 @@
 import { type Page, type Locator } from "@playwright/test";
-import { BasePage } from "./basePage";
-import { BackNextComponent } from "../components/bottomButtons/backNextComponent";
-import { ConfirmationPage } from "./confirmationPage";
+import { BasePage } from "./base-page";
+import { BackNextComponent } from "../components/bottomButtons/back-next-component";
+import { ConfirmationPage } from "./confirmation-page";
 
 export class ReceiverPage extends BasePage {
     public readonly firstName: Locator;

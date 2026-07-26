@@ -1,5 +1,5 @@
 import { type Locator, expect } from "@playwright/test";
-import { QuantityProductComponent } from "./quantityProductComponent";
+import { QuantityProductComponent } from "./quantity-product-component";
 
 export class CartpageProductComponent extends QuantityProductComponent {
     public readonly removeButton: Locator;

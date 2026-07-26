@@ -1,7 +1,7 @@
 import { type Page, type Locator } from "@playwright/test";
-import { BasePage } from "./basePage";
+import { BasePage } from "./base-page";
 import { HomepageProductComponent } from "../components/product";
-import { CartPage } from "./cartPage";
+import { CartPage } from "./cart-page";
 
 export class HomePage extends BasePage {
     public readonly productsSort: Locator;
