@@ -14,8 +14,13 @@ This framework is built using industry-standard design patterns. Here are the co
 * **Data-Driven Testing:** Decouple test scripts from test data, allowing the same test scenarios to run seamlessly with multiple data sets.
 * **Hooks Implementation:** Organizing setup and teardown configurations (like `beforeAll`, `beforeEach`, `afterEach`, and `afterAll`) to efficiently manage browser contexts and test cleanups.
 * **Environment Configuration & Global Auth:** Setting up clean configurations to easily toggle environments via `baseURL`. Includes implementing `storageState` to reuse authentication states across tests, while explicitly excluding the login tests to ensure the actual auth flow is always verified.
+* **Custom Fixtures:** Custom Fixtures make test setups practically effortless. It eliminates messy top-level `let` variables.
+* **Explicit Dynamic Imports for Known Flows:** For fixed transitions (like clicking a shopping cart logo), dynamically importing the target page inside the action method encapsulates navigation neatly while keeping startup bundle size lean.
+* **Generic Page Factory Patterns:** For shared actions leading to variable pages (like a dynamic "Next" button), leveraging TypeScript generics `async nextButtonNavigate<T>(TargetPage: new (page: Page) => T): Promise<T> {}` creates reusable transition handlers without sacrificing type safety..
 
 ---
 ## 🧭 Roadmap & Future Explorations
 
 Learning is an iterative process, and this framework is built to grow. As I dive deeper into the automation ecosystem, I plan to expand this repository with more advanced concepts. 
+
+
